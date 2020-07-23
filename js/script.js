@@ -1,12 +1,15 @@
 let root = document.documentElement;
 
-if (document.getElementById("menu-icon")) {
-    let menuIcon = document.getElementById("menu-icon");
-    menuIcon.addEventListener("click", () => {
-        root.style.setProperty("--menu-icon", "none");
-    })
-}
-
 document.body.onload = () => {
-    
+    fetch('https://opentdb.com/api_category.php').then(function (response){
+        response.json().then(function (data) {
+            for(category in data){
+                let names = ''
+                
+                console.log(names);
+                
+            }
+            
+        });
+    });
 }
