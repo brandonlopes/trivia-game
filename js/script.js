@@ -1,18 +1,59 @@
 let root = document.documentElement;
 
 document.body.onload = () => {
+    drawCategories();
+
+    let numberOfQuestions = 10;
+    let categoryIndex = 10;
+    let difficulty = "easy";
+    let quizType = "multiple" // multiple or boolean
+    let apiString = `https://opentdb.com/api.php?amount=${numberOfQuestions}&category=${categoryIndex}&difficulty=${difficulty}&type=${quizType}`
+
+    queryTriviaDB(apiString);
+}
+
+
+function getQuestions(triviaObjects) {
+    triviaObjects.forEach(trivia => {
+        console.log(trivia.question);
+    });
+}
+
+function getAnswers(triviaObjects) {
+    triviaObjects.forEach(trivia => {
+        console.log(`Correct Answer: ${trivia.correct_answer}`);
+        console.log(`Incorrect Answers: ${trivia.incorrect_answers} `);
+
+    });
+}
+
+function makeQuiz(triviaObjects) {
+
+}
+
+function queryTriviaDB(url) {
+    fetch(url).then(function (response) {
+        response.json().then(function (data) {
+            getAnswers(data.results);
+        });
+    });
+}
+
+// -----
+
+function drawCategories() {
     const categories = [
         "General Knowledge",
-        "Entertainment: Books",
-        "Entertainment: Film",
-        "Entertainment: Music",
-        "Entertainment: Musicals & Theatres",
-        "Entertainment: Television",
-        "Entertainment: Video Games",
-        "Entertainment: Board Games",
+        "Books",
+        "Film",
+        "Music",
+        "Musicals & Theatres",
+        "Television",
+        "Video Games",
+        "Board Games",
         "Science & Nature",
-        "Science: Computers",
-        "Science: Mathematics",
+        "Computers",
+        "Mathematics",
         "Mythology",
         "Sports",
         "Geography",
@@ -22,30 +63,35 @@ document.body.onload = () => {
         "Celebrities",
         "Animals",
         "Vehicles",
-        "Entertainment: Comics",
-        "Science: Gadgets",
-        "Entertainment: Japanese Anime & Manga",
-        "Entertainment: Cartoon & Animations"
-    ];
+        "Comics",
+        "Gadgets",
+        "Japanese Anime & Manga",
+        "Cartoon & Animations"
+    ]
+    let categoryDiv = document.getElementById("categories");
 
-    let entertainment = [];
-    let science = [];
-
-    for (let i = 0; i < categories.length; i++) {
-        if (categories[i].includes("Entertainment")) { entertainment.push(categories[i]) }
-        if (categories[i].includes("Science")) { science.push(categories[i]) }
-
-    }
-    let subCategories = entertainment.concat(science);
-    console.log(subCategories);
-    
-
-    fetch('https://opentdb.com/api_category.php').then(function (response) {
-        response.json().then(function (data) {
-            for (let i = 0; i < data.trivia_categories.length; i++) {
-                console.log(data.trivia_categories[i].name);
-            }
-
+    categories.forEach(category => {
+        let item = document.createElement("button");
+        item.addEventListener("click", () => {
+            console.log(categories.indexOf(item.textContent));
+            clearElement(categoryDiv.id);
+            drawDifficultyScreen();
         });
+        item.textContent = category;
+        categoryDiv.appendChild(item);
     });
+}
+
+function drawDifficultyScreen(){
+    const difficulties = ["easy", "medium", "hard"];
+    difficulties.forEach(difficulty => {
+        let button = document.createElement("button");
+        button.addEventListener("click", () => {
+
+        })
+    });
+}
+
+function clearElement(element) {
+    document.getElementById(element).innerText = "";
 }
