@@ -14,11 +14,7 @@
         }
 
         body {
-            /* display: flex;
-            justify-content: center;
-            align-items: center; */
             min-height: 90vh;
-            /* max-width: 90%; */
             margin: auto;
             color: var(--black);
             line-height: 1.5;
@@ -42,7 +38,7 @@
         }
 
         footer{
-            margin-top: 10em;
+            height: 2em;
         }
 
         .logo{
@@ -58,8 +54,8 @@
         }
 
         #categories {
-            width: 100vw;
-            height: 35em;
+            width: 800px;
+            height: 40em;
             max-width: 100%;
             margin: auto;
             display: flex;
@@ -72,12 +68,15 @@
             padding: 1em;
             margin: 1em;
             width: 150px;
+            height: 70px;
             text-align: left;
             border: 1px solid lightgrey;
             /* box-shadow: 0px 4px 8px var(--black); */
             font-weight: bold;
             color: var(--black);
             text-shadow: 1px 1px white;
+            border-radius: 10px;
+            text-align: center;
         }
 
         #categories button:hover {
@@ -85,9 +84,16 @@
             cursor: pointer;
         }
 
+        #content {
+            width: 500px;
+            margin: auto;
+        }
+
         header h1 {
             text-align: center;
         }
+
+        
 
         @media only screen and (max-width: 950px) {
             :root {
@@ -95,23 +101,24 @@
             }
 
             #categories {
+                min-height: 80em;
                 flex-direction: row;
                 border: none;
             }
 
             #categories button{
-                width: 100%;
+                width: 35%;
                 border-radius: 0px;
             }
         }
     </style>
-    <title>Hello!</title>
+    <title>Another Trivia Game</title>
 </head>
 
 <body>
 
     <nav>
-        <h2 class="logo">ATG</h2>
+        <h2 class="logo">Another Trivia Game</h2>
     </nav>
 
     <div id="categories"></div>
@@ -121,7 +128,7 @@
     </div>
 
     <footer>
-
+        <!-- Made with ❤️ by Brandon Lopes  -->
     </footer>
 
 </body>
