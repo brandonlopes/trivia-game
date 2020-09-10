@@ -1,2 +1,2 @@
-# frontend-boiler-plate
-Simple default front-end starter files for any project
+# Trivia Game
+Made with HTML, CSS, JavaScript, and the Open Trivia API
