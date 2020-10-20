@@ -135,22 +135,17 @@ testQuestion = [
     },
 ];
 
-
 document.body.onload = () => {
-    getQuestions(testQuestion);
     testData.forEach(question => {
-        let potentialAnswers = getPotentialAnswers(question);
-        console.log(shuffleAnswers(potentialAnswers));
+        let potentialAnswers = shuffleAnswers(getPotentialAnswers(question));
+        // console.log(question.question);
+        // console.log(potentialAnswers);
     });
+    let trivia = queryTriviaDB("https://opentdb.com/api.php?amount=10&category=9");
+    console.log({trivia});
 };
 
 // -----------------------------------------------------------------------------------------
-
-function getQuestions(triviaObjects) {
-    triviaObjects.forEach(trivia => {
-        console.log(trivia.question);
-    });
-}
 
 function getPotentialAnswers(question) {
     let potentialAnswers = [];
@@ -167,20 +162,17 @@ function shuffleAnswers(answers) {
 }
 
 function makeQuiz(triviaData) {
-    let potentialAnswers = "";
     triviaData.forEach((question, index) => {
-        potentialAnswers = question.incorrect_answers.concat(question.correct_answer);
-        potentialAnswers = shuffleAnswers(potentialAnswers);
-        triviaData[index].potentialAnswers = potentialAnswers;
     });
-    // triviaData.potentialAnswers = potentialAnswers;
     drawQuiz(triviaData);
 }
 
-function queryTriviaDB(url) {
-    fetch(url).then(function (response) {
-        response.json().then(function (data) {
-            console.log(data.results);
-        });
-    });
+async function queryTriviaDB(url) {
+    const response = await fetch(url);
+    return response.json();
+    // fetch(url).then(function (response) {
+    //     response.json().then(function (data) {
+    //         console.log(data.results);
+    //     });
+    // });
 }
