@@ -1,4 +1,4 @@
-function drawCategories() {
+export function drawCategories() {
     const categories = [
         "General Knowledge",
         "Books",
@@ -41,7 +41,7 @@ function drawCategories() {
     });
 }
 
-function drawDifficultyScreen() {
+export function drawDifficultyScreen() {
     const difficulties = ["easy", "medium", "hard"];
     let categories = document.getElementById("categories");
 
@@ -58,9 +58,8 @@ function drawDifficultyScreen() {
     });
 }
 
-function drawQuiz(triviaData) {
+export function drawQuiz(triviaData) {
     let apiString = `https://opentdb.com/api.php?amount=${numberOfQuestions}&category=${categoryID}&difficulty=${triviaDifficulty}`;
-    // queryTriviaDB(apiString);
     let question = document.createElement("p");
     console.log(triviaData[0].question);
     
@@ -87,3 +86,4 @@ function drawQuiz(triviaData) {
     
     
 }
+

@@ -1,4 +1,4 @@
-let categories = [
+export let categories = [
 { id: 9, name: 'General Knowledge' },
 { id: 10, name: 'Books' },
 { id: 11, name: 'Film' },

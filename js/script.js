@@ -1,7 +1,7 @@
+import * as draw from "./draw.js";
+import { categories } from "./trivia_data.js";
 
-// let root = document.documentElement;
-
-testQuestion = [
+let testQuestion = [
     {
         "category": "General Knowledge",
         "type": "multiple",
@@ -12,11 +12,13 @@ testQuestion = [
             "Moldova",
             "Czech Republic",
             "Denmark"
-        ]
+        ],
     },
 ];
 
 document.body.onload = () => {
+    console.log(categories);
+    draw.drawDifficultyScreen();
     queryTriviaDB("https://opentdb.com/api.php?amount=10&category=9").then(trivia => {
         trivia.results.forEach(result => {
             console.log(result.question);
