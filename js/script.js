@@ -18,7 +18,7 @@ let testQuestion = [
 
 document.body.onload = () => {
     console.log(categories);
-    draw.drawDifficultyScreen();
+    draw.drawCategories();
     queryTriviaDB("https://opentdb.com/api.php?amount=10&category=9").then(trivia => {
         trivia.results.forEach(result => {
             console.log(result.question);

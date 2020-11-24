@@ -31,7 +31,7 @@ export function drawCategories() {
         let button = document.createElement("button");
 
         button.addEventListener("click", () => {
-            categoryID = categories.indexOf(button.textContent) + 9;
+            let categoryID = categories.indexOf(button.textContent) + 9;
             categoryDiv.innerText = "";
             drawDifficultyScreen();
         });
@@ -43,6 +43,8 @@ export function drawCategories() {
 
 export function drawDifficultyScreen() {
     const difficulties = ["easy", "medium", "hard"];
+    let header = document.getElementById("header");
+    header.innerText = "Choose a difficulty";
     let categories = document.getElementById("categories");
 
     difficulties.forEach(difficulty => {
@@ -50,12 +52,16 @@ export function drawDifficultyScreen() {
         button.textContent = difficulty;
 
         button.addEventListener("click", () => {
-            triviaDifficulty = difficulties.find(element => difficulty === button.textContent);
+            let triviaDifficulty = difficulties.find(element => difficulty === button.textContent);
             categories.remove();
         });
 
         categories.appendChild(button);
     });
+}
+
+export function drawQuestionAmountScreen(){
+    
 }
 
 export function drawQuiz(triviaData) {
