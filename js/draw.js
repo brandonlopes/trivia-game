@@ -1,3 +1,8 @@
+let categoryID = "";
+let triviaDifficulty = "";
+let amountOfQuestions = "";
+
+
 export function drawCategories() {
     const categories = [
         "General Knowledge",
@@ -31,7 +36,7 @@ export function drawCategories() {
         let button = document.createElement("button");
 
         button.addEventListener("click", () => {
-            let categoryID = categories.indexOf(button.textContent) + 9;
+            categoryID = categories.indexOf(button.textContent) + 9;
             categoryDiv.innerText = "";
             drawDifficultyScreen();
         });
@@ -44,7 +49,7 @@ export function drawCategories() {
 export function drawDifficultyScreen() {
     const difficulties = ["easy", "medium", "hard"];
     let header = document.getElementById("header");
-    header.innerText = "Choose a difficulty";
+    header.innerText = "Choose A Difficulty";
     let categories = document.getElementById("categories");
 
     difficulties.forEach(difficulty => {
@@ -52,8 +57,9 @@ export function drawDifficultyScreen() {
         button.textContent = difficulty;
 
         button.addEventListener("click", () => {
-            let triviaDifficulty = difficulties.find(element => difficulty === button.textContent);
-            categories.remove();
+            triviaDifficulty = difficulties.find(element => difficulty === button.textContent);
+            categories.innerText = "";
+            drawQuestionAmountScreen();
         });
 
         categories.appendChild(button);
@@ -61,7 +67,11 @@ export function drawDifficultyScreen() {
 }
 
 export function drawQuestionAmountScreen(){
-    
+    let input = document.createElement("input");
+    input.type = "number";
+    let categories = document.getElementById("categories");
+    categories.appendChild(input)
+
 }
 
 export function drawQuiz(triviaData) {
