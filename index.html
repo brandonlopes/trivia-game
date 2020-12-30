@@ -10,36 +10,26 @@
     <style>
         :root {
             --black: #24292e;
-            --menu-icon: none;
         }
 
         body {
             min-height: 90vh;
             margin: auto;
-            color: var(--black);
+            color: white;
+            background-color: var(--black);
             line-height: 1.5;
             font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
             font-size: 16px;
             line-height: 1.5
         }
 
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            /* border-bottom: 1px solid lightgrey; */
-        }
-
-        nav a {
-            color: var(--black);
-            text-decoration: none;
-        }
-
         main{
+            /* background-color: white; */
             max-width: 90%;
             width: 650px;
             max-height: 90%;
             margin: 1em auto;
+            padding: 1em;
             /* border: 1px solid black; */
         }
 
@@ -51,10 +41,6 @@
 
         footer {
             height: 2em;
-        }
-
-        h2 {
-            margin-left: 1em;
         }
 
         #categories {
@@ -74,16 +60,17 @@
             width: 150px;
             height: 70px;
             text-align: left;
-            border: 1px solid lightgrey;
+            border: none;
+            color: white;
             font-weight: bold;
-            color: var(--black);
-            background-color: white;
+            background-color: var(--black);
             border-radius: 10px;
             text-align: center;
         }
 
-        #categories button:hover {
-            background-color: whitesmoke;
+        #categories button:hover, #categories button:focus   {
+            opacity: 0.5;
+            background-color: black;
             cursor: pointer;
         }
 
@@ -101,15 +88,19 @@
                 --menu-icon: block;
             }
 
-            #categories {
-                min-height: 80em;
-                flex-direction: row;
-                border: none;
+            main{
+                margin: 0px;
+                padding: 0px;
+                padding-top: 0.5em;
+                max-width: 100%;
             }
 
             #categories button {
-                width: 35%;
-            }
+                width: 25%;
+                padding: 0px;
+                /* border: 0.01px dotted lightgray; */
+                /* margin: 0.5em; */
+            } 
         }
     </style>
     <title>Another Trivia Game</title>
@@ -117,7 +108,7 @@
 
 <body>
     <nav>
-        <h2>Another Trivia Game</h2>
+        <!-- <h2>Another Trivia Game</h2> -->
     </nav>
 
     <main>
