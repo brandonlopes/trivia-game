@@ -3,7 +3,7 @@ let triviaDifficulty = "";
 let amountOfQuestions = "";
 
 
-export function drawCategories() {
+export function drawTriviaForm() {
     const categories = [
         "General Knowledge",
         "Books",
@@ -31,18 +31,20 @@ export function drawCategories() {
         "Cartoon & Animations"
     ]
     let categoryDiv = document.getElementById("categories");
+    let select = document.createElement("select");
 
     categories.forEach(category => {
-        let button = document.createElement("button");
+        let option = document.createElement("option");
 
-        button.addEventListener("click", () => {
-            categoryID = categories.indexOf(button.textContent) + 9;
+        option.addEventListener("click", () => {
+            categoryID = categories.indexOf(option.textContent) + 9;
             categoryDiv.innerText = "";
             drawDifficultyScreen();
         });
 
-        button.textContent = category;
-        categoryDiv.appendChild(button);
+        option.textContent = category;
+        select.appendChild(option);
+        categoryDiv.appendChild(select);
     });
 }
 
