@@ -30,49 +30,39 @@ export function drawTriviaForm() {
         "Japanese Anime & Manga",
         "Cartoon & Animations"
     ]
-    let categoryDiv = document.getElementById("categories");
+    let content = document.getElementById("content");
     let select = document.createElement("select");
 
     categories.forEach(category => {
         let option = document.createElement("option");
 
         option.addEventListener("click", () => {
-            categoryID = categories.indexOf(option.textContent) + 9;
-            categoryDiv.innerText = "";
-            drawDifficultyScreen();
+            console.log( categories.indexOf(option.textContent) + 9);
         });
 
         option.textContent = category;
         select.appendChild(option);
-        categoryDiv.appendChild(select);
+        content.appendChild(select);
     });
 }
 
 export function drawDifficultyScreen() {
     const difficulties = ["easy", "medium", "hard"];
-    let header = document.getElementById("header");
-    header.innerText = "Choose A Difficulty";
-    let categories = document.getElementById("categories");
+    let content = document.getElementById("content");
 
     difficulties.forEach(difficulty => {
         let button = document.createElement("button");
         button.textContent = difficulty;
 
-        button.addEventListener("click", () => {
-            triviaDifficulty = difficulties.find(element => difficulty === button.textContent);
-            categories.innerText = "";
-            drawQuestionAmountScreen();
-        });
-
-        categories.appendChild(button);
+        content.appendChild(button);
     });
 }
 
 export function drawQuestionAmountScreen(){
     let input = document.createElement("input");
     input.type = "number";
-    let categories = document.getElementById("categories");
-    categories.appendChild(input)
+    let content = document.getElementById("content");
+    content.appendChild(input)
 
 }
 
