@@ -30,6 +30,7 @@ const difficulties = ["easy", "medium", "hard"];
 
 let triviaQuestions = [];
 let questionCounter = 0;
+let triviaScore = 0;
 
 let testQuestion = [
     {
@@ -89,6 +90,9 @@ function drawQuestion(triviaObject) {
     let answerContainer = document.createElement('div');
     answerContainer.className = 'answerContainer';
 
+    let nextQuestionButton = document.createElement('button');
+    nextQuestionButton.innerText = 'Next Question';
+
     triviaObject.potentialAnswers.forEach(answer => {
         let answerButton = document.createElement('input');
         answerButton.setAttribute('type', 'radio');
@@ -105,17 +109,18 @@ function drawQuestion(triviaObject) {
 
         answerContainer.appendChild(answerDiv);
         main.appendChild(answerContainer);
+
+        answerButton.addEventListener('click', () => {
+            main.appendChild(nextQuestionButton);
+        })
+
     })
 
-    let nextQuestionButton = document.createElement('button');
-    nextQuestionButton.innerText = 'Next Question';
-    main.appendChild(nextQuestionButton);
-
     nextQuestionButton.addEventListener('click', () => {
-        if (document.querySelector(`input[name="${triviaObject.question}"]:checked`).value === 'on') {
-            questionCounter++;
-            drawQuestion(triviaQuestions[questionCounter]);
-        }
+        if (document.querySelector(`input[name="${triviaObject.question}"]:checked`).id === triviaObject.correct_answer) { alert('Correct!'); } 
+        else { alert('Incorrect'); }
+        questionCounter++;
+        drawQuestion(triviaQuestions[questionCounter]);
     })
 
 }
