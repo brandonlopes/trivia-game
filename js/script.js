@@ -28,6 +28,8 @@ const categories = [
 
 const difficulties = ["easy", "medium", "hard"];
 
+let triviaQuestions = [];
+
 let testQuestion = [
     {
         "category": "General Knowledge",
@@ -45,6 +47,7 @@ let testQuestion = [
 
 document.body.onload = () => {
     let form = document.getElementsByTagName('form')[0];
+
     form.addEventListener('submit', (event) => {
         event.preventDefault();
         let categoryID = '';
@@ -57,7 +60,10 @@ document.body.onload = () => {
 
         queryTriviaDB(apiString).then(trivia => {
             trivia.results.forEach(result => {
-                console.log(result);
+                let answers = getPotentialAnswers(result);
+                result.potentialAnswers = shuffleAnswers(answers);
+                triviaQuestions.push(result);
+                drawQuestion(result);
             });
         });
     });
@@ -65,7 +71,41 @@ document.body.onload = () => {
 
 };
 
+// document.body.addEventListener("keydown", () => {
+//     console.log(triviaQuestions);
+// })
+
 // ----------------------------------------------------------------------------------------- 
+
+function drawQuestion(triviaObject){
+    let main = document.getElementsByTagName('main')[0];
+    main.innerHTML = '';
+
+    let question = document.createElement('p');
+    question.innerHTML = triviaObject.question;
+    main.appendChild(question);
+
+    let answerContainer = document.createElement('div');
+    answerContainer.className = 'answerContainer';
+
+    triviaObject.potentialAnswers.forEach(answer => {
+        let answerButton = document.createElement('input');
+        answerButton.setAttribute('type', 'radio');
+        answerButton.name = triviaObject.question;
+        answerButton.id = answer;
+
+        let label = document.createElement('label');
+        label.htmlFor = answerButton.id;
+        label.innerText = answer;
+
+        let answerDiv = document.createElement('div');
+        answerDiv.appendChild(answerButton);
+        answerDiv.appendChild(label);
+        
+        answerContainer.appendChild(answerDiv);
+        main.appendChild(answerContainer);
+    })
+}
 
 function getPotentialAnswers(question) {
     let potentialAnswers = [];
@@ -81,11 +121,10 @@ function shuffleAnswers(answers) {
     return answers;
 }
 
-function makeQuiz(triviaData) {
+function makeQuiz(triviaObject) {
     triviaData.forEach((question, index) => {
 
     });
-    drawQuiz(triviaData);
 }
 
 async function queryTriviaDB(url) {

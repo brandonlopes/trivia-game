@@ -33,6 +33,9 @@
         }
 
         h3 {
+            width: 50%;
+            margin: auto;
+            margin-top: 1em;
             text-align: center;
             padding-bottom: 1em;
             border-bottom: 1px solid lightgray;
@@ -44,13 +47,42 @@
 
         select {
             margin-bottom: 2em;
-            transition-duration: 5ms;
-            text-transform: capitalize;
         }
 
-        select:hover, input:hover {
+        select:last-of-type {
+            margin-bottom: 3em;
+        }
+
+        select,
+        input[type=submit] {
+            transition-duration: 5ms;
+            text-transform: capitalize;
+            padding-top: 0.2em;
+            padding-bottom: 0.2em;
+        }
+
+        select:hover,
+        input:hover {
             cursor: pointer;
             opacity: 0.8;
+        }
+
+        input[type='radio']{
+            margin: 0px;
+        }
+
+        label{
+            padding-left: 0.5em;
+            line-height: 1em;
+        }
+
+        div{
+            width: 100%;
+            /* min-height: 20px; */
+            display: flex;
+            flex-flow: row wrap;
+            align-items: center;
+            margin-bottom: 1em;
         }
 
         form {
@@ -62,6 +94,15 @@
             width: 400px;
             max-width: 75%;
             border: 1px solid lightgray;
+        }
+
+        .answerContainer {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .answerContainer label:hover{
+            cursor: pointer;
         }
 
         @media only screen and (max-width: 950px) {
@@ -81,9 +122,9 @@
 </head>
 
 <body>
+    <h3 id="header">Another Trivia Game</h3>
 
     <main>
-        <h3 id="header">Another Trivia Game</h3>
 
         <form method="POST">
             <label for="categories">Category:</label>
@@ -120,9 +161,8 @@
                 <option>medium</option>
                 <option>hard</option>
             </select>
-            <input type="submit" value="Submit">
+            <input type="submit" value="Play!">
         </form>
-        
 
     </main>
 

@@ -1,15 +1,3 @@
-// export function drawTriviaForm(data) {
-//     let content = document.getElementById("content");
-//     let select = document.createElement("select");
-
-//     data.forEach(element => {
-//         let option = document.createElement("option");
-//         option.textContent = element.name || element;
-//         select.appendChild(option);
-//         content.appendChild(select);
-//     });
-// }
-
 export function drawQuiz(triviaData) {
     let question = document.createElement("p");
     console.log(triviaData.question);
