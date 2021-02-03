@@ -29,6 +29,7 @@ const categories = [
 const difficulties = ["easy", "medium", "hard"];
 
 let triviaQuestions = [];
+let questionCounter = 0;
 
 let testQuestion = [
     {
@@ -63,7 +64,7 @@ document.body.onload = () => {
                 let answers = getPotentialAnswers(result);
                 result.potentialAnswers = shuffleAnswers(answers);
                 triviaQuestions.push(result);
-                drawQuestion(result);
+                drawQuestion(triviaQuestions[questionCounter]);
             });
         });
     });
@@ -77,7 +78,7 @@ document.body.onload = () => {
 
 // ----------------------------------------------------------------------------------------- 
 
-function drawQuestion(triviaObject){
+function drawQuestion(triviaObject) {
     let main = document.getElementsByTagName('main')[0];
     main.innerHTML = '';
 
@@ -101,10 +102,22 @@ function drawQuestion(triviaObject){
         let answerDiv = document.createElement('div');
         answerDiv.appendChild(answerButton);
         answerDiv.appendChild(label);
-        
+
         answerContainer.appendChild(answerDiv);
         main.appendChild(answerContainer);
     })
+
+    let nextQuestionButton = document.createElement('button');
+    nextQuestionButton.innerText = 'Next Question';
+    main.appendChild(nextQuestionButton);
+
+    nextQuestionButton.addEventListener('click', () => {
+        if (document.querySelector(`input[name="${triviaObject.question}"]:checked`).value === 'on') {
+            questionCounter++;
+            drawQuestion(triviaQuestions[questionCounter]);
+        }
+    })
+
 }
 
 function getPotentialAnswers(question) {
