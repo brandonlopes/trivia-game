@@ -1,5 +1,32 @@
 import * as draw from "./draw.js";
-import { categories } from "./trivia_data.js";
+
+const categories = [
+    { id: 9, name: 'General Knowledge' },
+    { id: 10, name: 'Books' },
+    { id: 11, name: 'Film' },
+    { id: 12, name: 'Music' },
+    { id: 13, name: 'Musicals & Theatres' },
+    { id: 14, name: 'Television' },
+    { id: 15, name: 'Video Games' },
+    { id: 16, name: 'Board Games' },
+    { id: 17, name: 'Science & Nature' },
+    { id: 18, name: 'Computers' },
+    { id: 19, name: 'Mathematics' },
+    { id: 20, name: 'Mythology' },
+    { id: 21, name: 'Sports' },
+    { id: 22, name: 'Geography' },
+    { id: 23, name: 'History' },
+    { id: 24, name: 'Politics' },
+    { id: 25, name: 'Art' },
+    { id: 26, name: 'Celebrities' },
+    { id: 27, name: 'Animals' },
+    { id: 28, name: 'Vehicles' },
+    { id: 29, name: 'Comics' },
+    { id: 30, name: 'Gadgets' },
+    { id: 31, name: 'Japanese Anime & Manga' },
+    { id: 32, name: 'Cartoon & Animations' }];
+
+const difficulties = ["easy", "medium", "hard"];
 
 let testQuestion = [
     {
@@ -17,20 +44,28 @@ let testQuestion = [
 ];
 
 document.body.onload = () => {
-    console.log(categories);
-    draw.drawTriviaForm();
-    queryTriviaDB("https://opentdb.com/api.php?amount=10&category=9").then(trivia => {
-        trivia.results.forEach(result => {
-            console.log(result.question);
+    let form = document.getElementsByTagName('form')[0];
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        let categoryID = '';
+        categories.forEach(category => {
+            if (form.elements[0].value === category.name) categoryID = category.id;
+        });
+
+        let triviaDifficulty = form.elements[1].value;
+        let apiString = `https://opentdb.com/api.php?amount=10&category=${categoryID}&difficulty=${triviaDifficulty}`;
+
+        queryTriviaDB(apiString).then(trivia => {
+            trivia.results.forEach(result => {
+                console.log(result);
+            });
         });
     });
+
+
 };
 
 // ----------------------------------------------------------------------------------------- 
-
-function getTriviaUrl() {
-
-}
 
 function getPotentialAnswers(question) {
     let potentialAnswers = [];
