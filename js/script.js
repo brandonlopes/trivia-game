@@ -26,26 +26,9 @@ const categories = [
     { id: 31, name: 'Japanese Anime & Manga' },
     { id: 32, name: 'Cartoon & Animations' }];
 
-const difficulties = ["easy", "medium", "hard"];
-
 let triviaQuestions = [];
 let questionCounter = 0;
 let triviaScore = 0;
-
-let testQuestion = [
-    {
-        "category": "General Knowledge",
-        "type": "multiple",
-        "difficulty": "easy",
-        "question": "Where is the train station &quot;Llanfair&shy;pwllgwyngyll&shy;gogery&shy;chwyrn&shy;drobwll&shy;llan&shy;tysilio&shy;gogo&shy;goch&quot;?",
-        "correct_answer": "Wales",
-        "incorrect_answers": [
-            "Moldova",
-            "Czech Republic",
-            "Denmark"
-        ],
-    },
-];
 
 document.body.onload = () => {
     let form = document.getElementsByTagName('form')[0];
@@ -65,17 +48,13 @@ document.body.onload = () => {
                 let answers = getPotentialAnswers(result);
                 result.potentialAnswers = shuffleAnswers(answers);
                 triviaQuestions.push(result);
-                drawQuestion(triviaQuestions[questionCounter]);
             });
+            drawQuestion(triviaQuestions[questionCounter]);
         });
+
     });
 
-
 };
-
-// document.body.addEventListener("keydown", () => {
-//     console.log(triviaQuestions);
-// })
 
 // ----------------------------------------------------------------------------------------- 
 
@@ -90,6 +69,10 @@ function drawQuestion(triviaObject) {
     let answerContainer = document.createElement('div');
     answerContainer.className = 'answerContainer';
 
+    let questionCount = document.createElement('p');
+    questionCount.classList.add('questionCount')
+    questionCount.innerText = `Question ${questionCounter + 1} of 10`
+
     let nextQuestionButton = document.createElement('button');
     nextQuestionButton.innerText = 'Next Question';
 
@@ -101,7 +84,7 @@ function drawQuestion(triviaObject) {
 
         let label = document.createElement('label');
         label.htmlFor = answerButton.id;
-        label.innerText = answer;
+        label.innerHTML = answer;
 
         let answerDiv = document.createElement('div');
         answerDiv.appendChild(answerButton);
@@ -116,11 +99,21 @@ function drawQuestion(triviaObject) {
 
     })
 
+    answerContainer.appendChild(questionCount);
+
     nextQuestionButton.addEventListener('click', () => {
-        if (document.querySelector(`input[name="${triviaObject.question}"]:checked`).id === triviaObject.correct_answer) { alert('Correct!'); } 
-        else { alert('Incorrect'); }
+        let attemptedAnswer = document.querySelector(`input[name="${triviaObject.question}"]:checked`);
+        if (attemptedAnswer.id === triviaObject.correct_answer) {
+            triviaScore++;
+        }
+        else { console.log('Incorrect'); }
         questionCounter++;
-        drawQuestion(triviaQuestions[questionCounter]);
+        try {
+            drawQuestion(triviaQuestions[questionCounter]);
+        } catch (error) {
+            console.log(error);
+        }
+
     })
 
 }
