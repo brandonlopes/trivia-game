@@ -40,7 +40,7 @@ document.body.onload = () => {
         });
 
         let numberOfQuestions = form.elements[2].value
-        let triviaDifficulty = form.elements[1].value;
+        let triviaDifficulty = form.elements[1].value.toLowerCase();
         let apiString = `https://opentdb.com/api.php?amount=${numberOfQuestions}&category=${categoryID}&difficulty=${triviaDifficulty}`;
 
         queryTriviaDB(apiString).then(trivia => {
@@ -100,7 +100,7 @@ function drawQuestion(triviaObject) {
     })
 
     main.appendChild(questionCounter);
-    
+
     // ------------------------------------------------------------------------------------------------------------    
 
     nextQuestionButton.addEventListener('click', () => {
