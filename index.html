@@ -17,7 +17,8 @@
 
         body {
             min-height: 90vh;
-            /* margin: auto; */
+            margin: 0px;
+            padding: 0px;
             color: white;
             background-color: var(--black);
             line-height: 1.5;
@@ -50,7 +51,8 @@
             padding-left: 0.5em;
         }
 
-        select, input {
+        select,
+        input {
             margin-bottom: 2em;
         }
 
@@ -96,9 +98,42 @@
             height: 2em;
         }
 
-        hr{
+        hr {
             width: 100%;
             margin-bottom: 2em;
+        }
+
+        button{
+            min-width: 100px;
+            margin-bottom: 1em;
+            border: none;
+            background-color: lightgray;
+            padding: 1em;
+            border-radius: 5px;
+        }
+
+        #modal {
+            position: absolute;
+            /* display: none; */
+            justify-content: center;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        #modal div {
+            text-align: center;
+            flex-direction: column;
+            height: 150px;
+            width: 300px;
+            background-color: var(--black);
+            border: 2px solid lightgray;
+        }
+
+        #modal p{
+            margin: auto;
         }
 
         .answerContainer {
@@ -115,8 +150,16 @@
             text-align: right;
         }
 
-        .correct{
+        .correct {
             background-color: green;
+        }
+
+        .incorrect{
+            background-color: darkred;
+        }
+
+        .toggle{
+            display: flex;
         }
 
         @media only screen and (max-width: 700px) {
@@ -130,8 +173,14 @@
 </head>
 
 <body>
-    <h3 id="header">Another Trivia Game</h3>
+    <div id="modal" style="display: none;">
+        <div>
+            <p id="message"></p>
+            <button id="ok">OK</button>
+        </div>
+    </div>
 
+    <h3 id="header">Another Trivia Game</h3>
     <main>
 
         <form method="POST">

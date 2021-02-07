@@ -97,35 +97,56 @@ function drawQuestion(triviaObject) {
         answerButton.addEventListener('click', () => {
             main.appendChild(nextQuestionButton);
         })
-
-
     })
 
-    // ------------------------------------------------------------------------------------------------------------
-
     main.appendChild(questionCounter);
+    
+    // ------------------------------------------------------------------------------------------------------------    
 
     nextQuestionButton.addEventListener('click', () => {
         let attemptedAnswer = document.querySelector(`input[name="${triviaObject.question}"]:checked`);
+        let correctAnswer = document.getElementById(triviaObject.correct_answer).parentElement;
+
         if (attemptedAnswer.id === triviaObject.correct_answer) {
-            alert('Correct! 👍');
+            correctAnswer.classList.add('correct');
+            drawModal('Correct! 👍');
             triviaScore++;
         } else {
-            let correctAnswer = document.getElementById(triviaObject.correct_answer).parentElement;
-            console.log(correctAnswer);
             correctAnswer.classList.add('correct');
-            alert('Incorrect 👎');
+            attemptedAnswer.parentElement.classList.add('incorrect');
+            drawModal('Incorrect 👎');
         }
 
         if (questionCount === triviaQuestions.length - 1) {
-            alert(`Your score:\n${triviaScore}/${triviaQuestions.length}`);
-            main.innerHTML = '';
-            window.location.reload();
-        } else {
+            drawModal(`Your score:\n${triviaScore}/${triviaQuestions.length}\n\nClick anywhere to restart`, true);
+        } 
+
+    })
+
+    function drawModal(message, restart) {
+        let modal = document.getElementById('modal');
+        modal.style.display = 'flex';
+        modal.addEventListener('click', nextQuestion);
+
+        let okButton = document.getElementById('ok');
+        okButton.addEventListener('click', nextQuestion);
+
+        let modalMessage = document.getElementById('message');
+        modalMessage.innerText = message;
+
+        function nextQuestion(){
+            modal.style.display = 'none';
             drawQuestion(triviaQuestions[questionCount + 1]);
         }
 
-    })
+        if (restart === true) {
+            modal.removeEventListener('click', nextQuestion);
+            okButton.remove();
+            modal.addEventListener('click', () => {
+                window.location.reload();
+            })
+        }
+    }
 
 }
 
@@ -148,3 +169,4 @@ async function queryTriviaDB(url) {
     const trivia = await response.json();
     return trivia;
 }
+
