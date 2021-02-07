@@ -17,7 +17,7 @@
 
         body {
             min-height: 90vh;
-            margin: auto;
+            /* margin: auto; */
             color: white;
             background-color: var(--black);
             line-height: 1.5;
@@ -27,23 +27,25 @@
         }
 
         main {
-            max-width: 90%;
+            display: flex;
+            justify-content: center;
+            max-width: 100%;
             width: var(--content-width);
             max-height: 90%;
-            margin-top: 1em;
             margin: auto;
+            margin-top: 1em;
             padding: 1em;
         }
 
         form {
             display: flex;
             flex-direction: column;
-            margin: auto;
+            /* margin: auto; */
             margin-top: 2em;
             padding: 1.5em;
             width: 400px;
             max-width: 75%;
-            border: 1px solid lightgray;
+            border: 1px dotted lightgray;
         }
 
         label {
