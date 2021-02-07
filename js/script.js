@@ -27,7 +27,6 @@ const categories = [
     { id: 32, name: 'Cartoon & Animations' }];
 
 let triviaQuestions = [];
-let questionCounter = 0;
 let triviaScore = 0;
 
 document.body.onload = () => {
@@ -40,8 +39,9 @@ document.body.onload = () => {
             if (form.elements[0].value === category.name) categoryID = category.id;
         });
 
+        let numberOfQuestions = form.elements[2].value
         let triviaDifficulty = form.elements[1].value;
-        let apiString = `https://opentdb.com/api.php?amount=10&category=${categoryID}&difficulty=${triviaDifficulty}`;
+        let apiString = `https://opentdb.com/api.php?amount=${numberOfQuestions}&category=${categoryID}&difficulty=${triviaDifficulty}`;
 
         queryTriviaDB(apiString).then(trivia => {
             trivia.results.forEach(result => {
@@ -49,7 +49,7 @@ document.body.onload = () => {
                 result.potentialAnswers = shuffleAnswers(answers);
                 triviaQuestions.push(result);
             });
-            drawQuestion(triviaQuestions[questionCounter]);
+            drawQuestion(triviaQuestions[0]);
         });
 
     });
@@ -69,9 +69,10 @@ function drawQuestion(triviaObject) {
     let answerContainer = document.createElement('div');
     answerContainer.className = 'answerContainer';
 
-    let questionCount = document.createElement('p');
-    questionCount.classList.add('questionCount')
-    questionCount.innerText = `Question ${questionCounter + 1} of 10`
+    let questionCount = triviaQuestions.indexOf(triviaObject);
+    let questionCounter = document.createElement('p');
+    questionCounter.classList.add('questionCount')
+    questionCounter.innerText = `Question ${questionCount + 1} of ${triviaQuestions.length}`
 
     let nextQuestionButton = document.createElement('button');
     nextQuestionButton.innerText = 'Next Question';
@@ -97,21 +98,25 @@ function drawQuestion(triviaObject) {
             main.appendChild(nextQuestionButton);
         })
 
+        
     })
 
-    answerContainer.appendChild(questionCount);
+    // ------------------------------------------------------------------------------------------------------------
+
+    main.appendChild(questionCounter);
 
     nextQuestionButton.addEventListener('click', () => {
         let attemptedAnswer = document.querySelector(`input[name="${triviaObject.question}"]:checked`);
-        if (attemptedAnswer.id === triviaObject.correct_answer) {
-            triviaScore++;
-        }
-        else { console.log('Incorrect'); }
-        questionCounter++;
-        try {
-            drawQuestion(triviaQuestions[questionCounter]);
-        } catch (error) {
-            console.log(error);
+        if (attemptedAnswer.id === triviaObject.correct_answer) triviaScore++;
+
+        if (questionCount === triviaQuestions.length - 1) {
+            alert(`Your score:\n${triviaScore}/${triviaQuestions.length}`);
+            main.innerHTML = '';
+            window.location.reload();
+        } else {
+            console.log(triviaQuestions.length);
+            console.log(questionCount);
+            drawQuestion(triviaQuestions[questionCount + 1]);
         }
 
     })
@@ -130,12 +135,6 @@ function shuffleAnswers(answers) {
         [answers[i], answers[j]] = [answers[j], answers[i]];
     }
     return answers;
-}
-
-function makeQuiz(triviaObject) {
-    triviaData.forEach((question, index) => {
-
-    });
 }
 
 async function queryTriviaDB(url) {
