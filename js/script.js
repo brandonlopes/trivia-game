@@ -98,7 +98,7 @@ function drawQuestion(triviaObject) {
             main.appendChild(nextQuestionButton);
         })
 
-        
+
     })
 
     // ------------------------------------------------------------------------------------------------------------
@@ -107,15 +107,21 @@ function drawQuestion(triviaObject) {
 
     nextQuestionButton.addEventListener('click', () => {
         let attemptedAnswer = document.querySelector(`input[name="${triviaObject.question}"]:checked`);
-        if (attemptedAnswer.id === triviaObject.correct_answer) triviaScore++;
+        if (attemptedAnswer.id === triviaObject.correct_answer) {
+            alert('Correct! 👍');
+            triviaScore++;
+        } else {
+            let correctAnswer = document.getElementById(triviaObject.correct_answer).parentElement;
+            console.log(correctAnswer);
+            correctAnswer.classList.add('correct');
+            alert('Incorrect 👎');
+        }
 
         if (questionCount === triviaQuestions.length - 1) {
             alert(`Your score:\n${triviaScore}/${triviaQuestions.length}`);
             main.innerHTML = '';
             window.location.reload();
         } else {
-            console.log(triviaQuestions.length);
-            console.log(questionCount);
             drawQuestion(triviaQuestions[questionCount + 1]);
         }
 
