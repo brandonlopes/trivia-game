@@ -35,26 +35,23 @@
             padding: 1em;
         }
 
-        h3 {
-            width: var(--content-width);
-            max-width: 100%;
+        form {
+            display: flex;
+            flex-direction: column;
             margin: auto;
-            margin-top: 1em;
-            text-align: center;
-            padding-bottom: 1em;
-            border-bottom: 1px solid lightgray;
+            margin-top: 2em;
+            padding: 1.5em;
+            width: 400px;
+            max-width: 75%;
+            border: 1px solid lightgray;
         }
 
-        footer {
-            height: 2em;
+        label {
+            padding-left: 0.5em;
         }
 
         select, input {
             margin-bottom: 2em;
-        }
-
-        select:last-of-type {
-            margin-bottom: 3em;
         }
 
         select,
@@ -77,8 +74,14 @@
             margin: 0px;
         }
 
-        label {
-            padding-left: 0.5em;
+        h3 {
+            width: var(--content-width);
+            max-width: 100%;
+            margin: auto;
+            margin-top: 1em;
+            text-align: center;
+            padding-bottom: 1em;
+            border-bottom: 1px solid lightgray;
         }
 
         div {
@@ -89,15 +92,13 @@
             margin-bottom: 1em;
         }
 
-        form {
-            display: flex;
-            flex-direction: column;
-            margin: auto;
-            margin-top: 2em;
-            padding: 1.5em;
-            width: 400px;
-            max-width: 75%;
-            border: 1px solid lightgray;
+        footer {
+            height: 2em;
+        }
+
+        hr{
+            width: 100%;
+            margin-bottom: 2em;
         }
 
         .answerContainer {
@@ -161,6 +162,7 @@
             <label for="quantity">Number of Questions: (5 - 50):</label>
             <input type="number" id="quantity" name="quantity" min="5" max="50" value="10">
 
+            <hr>
             <input type="submit" value="Play!">
         </form>
 
