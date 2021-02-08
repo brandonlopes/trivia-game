@@ -85,13 +85,17 @@ function drawQuestion(triviaObject) {
 
         let label = document.createElement('label');
         label.htmlFor = answerButton.id;
-        label.innerHTML = answer;
+        // label.innerHTML = answer;
+
+        let span = document.createElement('span');
+        span.innerHTML = answer;
 
         let answerDiv = document.createElement('div');
         answerDiv.appendChild(answerButton);
-        answerDiv.appendChild(label);
+        answerDiv.appendChild(span);
+        label.appendChild(answerDiv);
 
-        answerContainer.appendChild(answerDiv);
+        answerContainer.appendChild(label);
         main.appendChild(answerContainer);
 
         answerButton.addEventListener('click', () => {

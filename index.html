@@ -63,7 +63,8 @@
         }
 
         label {
-            padding-left: 0.5em;
+            padding-left: 0px;
+            width: 100%;
         }
 
         select,
@@ -127,6 +128,10 @@
             border-radius: 5px;
         }
 
+        span {
+            margin-left: 0.5em;
+        }
+
         #modal {
             position: absolute;
             /* display: none; */
@@ -151,6 +156,10 @@
             margin: auto;
         }
 
+        main button {
+                float: right;
+            }
+
         .answerContainer {
             display: flex;
             flex-direction: column;
@@ -159,6 +168,16 @@
         .answerContainer label:hover {
             cursor: pointer;
         }
+
+        .answerContainer div {
+            background-color: var(--gray8);
+            padding-left: 1em;
+            padding-top: 1em;
+            padding-bottom: 1em;
+            padding-right: 0px;
+            max-width: 97%;
+        }
+
 
         .questionCount {
             width: 100%;
@@ -182,18 +201,16 @@
                 max-width: 85%;
             }
 
-            main button{
-                float: right;
+            .answerContainer div {
+                width: 95%;
             }
 
-            .answerContainer div{
-                width: 90%;
-                background-color: var(--gray8);
-                padding: 1em;
+            .answerContainer label {
+                width: 100%;
             }
 
-            #modal div{
-                margin-top: 5em;
+            #modal div {
+                margin-top: 20em;
                 height: 100px;
                 width: 300px;
             }
