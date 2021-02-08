@@ -28,10 +28,11 @@
             --gray8: #343a40;
             --gray9: #212529;
             --content-width: 650px;
+            --buttonOffset: 1110;
         }
 
         body {
-            min-height: 90vh;
+            /* min-height: 68vh; */
             margin: 0px;
             padding: 0px;
             color: var(--gray2);
@@ -70,6 +71,9 @@
         select,
         input {
             margin-bottom: 2em;
+            background-color: var(--gray1);
+            border: none;
+            border-radius: 4px;
         }
 
         select,
@@ -85,7 +89,7 @@
         input[type=number]{
             padding-top: 0.5em;
             padding-bottom: 0.5em;           
-            background-color: #f1efee;
+            background-color: var(--gray1);
         }
 
         select:hover,
@@ -96,6 +100,7 @@
         }
 
         input[type='radio'] {
+            background-color: var(--gray1);
             margin: 0px;
         }
 
@@ -143,6 +148,7 @@
             position: absolute;
             /* display: none; */
             justify-content: center;
+            align-items: flex-end;
             top: 0;
             left: 0;
             height: 100%;
@@ -151,7 +157,10 @@
         }
 
         #modal div {
-            margin-top: 13em;
+            z-index: 1;
+            display: absolute;
+            top: var(--buttonOffset);
+            margin-bottom: 15em;
             text-align: center;
             flex-direction: column;
             height: 150px;
@@ -210,7 +219,7 @@
             }
 
             #modal div {
-                margin-top: 23em;
+                margin-bottom: 1.5em;
                 height: 100px;
                 width: 300px;
             }
@@ -223,7 +232,6 @@
     <div id="modal" style="display: none;">
         <div>
             <p id="message"></p>
-            <button id="ok">OK</button>
         </div>
     </div>
 

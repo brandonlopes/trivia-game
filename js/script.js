@@ -108,37 +108,40 @@ function drawQuestion(triviaObject) {
     // ------------------------------------------------------------------------------------------------------------    
 
     nextQuestionButton.addEventListener('click', () => {
+        let buttonLocation = nextQuestionButton.offsetTop
+        console.log(buttonLocation);
+
         let attemptedAnswer = document.querySelector(`input[name="${triviaObject.question}"]:checked`);
         let correctAnswer = document.getElementById(triviaObject.correct_answer);
 
         if (attemptedAnswer.id === triviaObject.correct_answer) {
             correctAnswer.parentElement.style = "background-color: green;";
-            drawModal('Correct! 👍');
+            drawModal('Correct! 👍', buttonLocation);
             triviaScore++;
         } else {
             console.log(correctAnswer.parentElement);
             console.log(attemptedAnswer.parentElement);
             correctAnswer.parentElement.style = "background-color: green;";
             attemptedAnswer.parentElement.style = "background-color: darkred;";
-            drawModal('Incorrect 👎');
+            drawModal('Incorrect 👎', buttonLocation);
         }
 
         if (questionCount === triviaQuestions.length - 1) {
-            drawModal(`Your score:\n${triviaScore}/${triviaQuestions.length}\n\nClick anywhere to restart`, true);
+            drawModal(`Your score:\n${triviaScore}/${triviaQuestions.length}\n\nClick anywhere to restart`, buttonLocation, true);
         } 
 
     })
 
-    function drawModal(message, restart) {
+    function drawModal(message, offset, restart) {
         let modal = document.getElementById('modal');
         modal.style.display = 'flex';
         modal.addEventListener('click', nextQuestion);
 
-        let okButton = document.getElementById('ok');
-        okButton.addEventListener('click', nextQuestion);
+        // let okButton = document.getElementById('ok');
+        // okButton.addEventListener('click', nextQuestion);
 
         let modalMessage = document.getElementById('message');
-        modalMessage.innerText = message;
+        modalMessage.innerText = message + "\n\nClick anywhere to continue";
 
         function nextQuestion(){
             modal.style.display = 'none';
