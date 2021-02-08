@@ -1,6 +1,4 @@
-import * as draw from "./draw.js";
-
-const categories = [
+const CATEGORIES = [
     { id: 9, name: 'General Knowledge' },
     { id: 10, name: 'Books' },
     { id: 11, name: 'Film' },
@@ -35,7 +33,7 @@ document.body.onload = () => {
     form.addEventListener('submit', (event) => {
         event.preventDefault();
         let categoryID = '';
-        categories.forEach(category => {
+        CATEGORIES.forEach(category => {
             if (form.elements[0].value === category.name) categoryID = category.id;
         });
 
@@ -85,7 +83,6 @@ function drawQuestion(triviaObject) {
 
         let label = document.createElement('label');
         label.htmlFor = answerButton.id;
-        // label.innerHTML = answer;
 
         let span = document.createElement('span');
         span.innerHTML = answer;
@@ -108,40 +105,34 @@ function drawQuestion(triviaObject) {
     // ------------------------------------------------------------------------------------------------------------    
 
     nextQuestionButton.addEventListener('click', () => {
-        let buttonLocation = nextQuestionButton.offsetTop
-        console.log(buttonLocation);
-
         let attemptedAnswer = document.querySelector(`input[name="${triviaObject.question}"]:checked`);
         let correctAnswer = document.getElementById(triviaObject.correct_answer);
 
         if (attemptedAnswer.id === triviaObject.correct_answer) {
             correctAnswer.parentElement.style = "background-color: green;";
-            drawModal('Correct! 👍', buttonLocation);
+            drawModal('Correct! 👍\n\nClick anywhere to continue' );
             triviaScore++;
         } else {
             console.log(correctAnswer.parentElement);
             console.log(attemptedAnswer.parentElement);
             correctAnswer.parentElement.style = "background-color: green;";
             attemptedAnswer.parentElement.style = "background-color: darkred;";
-            drawModal('Incorrect 👎', buttonLocation);
+            drawModal('Incorrect 👎\n\nClick anywhere to continue');
         }
 
         if (questionCount === triviaQuestions.length - 1) {
-            drawModal(`Your score:\n${triviaScore}/${triviaQuestions.length}\n\nClick anywhere to restart`, buttonLocation, true);
+            drawModal(`Your score:\n${triviaScore}/${triviaQuestions.length}\n\nClick anywhere to restart`, true);
         } 
 
     })
 
-    function drawModal(message, offset, restart) {
+    function drawModal(message, restart) {
         let modal = document.getElementById('modal');
         modal.style.display = 'flex';
         modal.addEventListener('click', nextQuestion);
 
-        // let okButton = document.getElementById('ok');
-        // okButton.addEventListener('click', nextQuestion);
-
         let modalMessage = document.getElementById('message');
-        modalMessage.innerText = message + "\n\nClick anywhere to continue";
+        modalMessage.innerText = message;
 
         function nextQuestion(){
             modal.style.display = 'none';
@@ -150,9 +141,8 @@ function drawQuestion(triviaObject) {
 
         if (restart === true) {
             modal.removeEventListener('click', nextQuestion);
-            okButton.remove();
             modal.addEventListener('click', () => {
-                window.location.reload();
+                location.reload();
             })
         }
     }
