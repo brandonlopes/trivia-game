@@ -121,7 +121,7 @@ function drawQuestion(triviaObject) {
         }
 
         if (questionCount === triviaQuestions.length - 1) {
-            drawModal(`Your score:\n${triviaScore}/${triviaQuestions.length}\n\nClick anywhere to restart`, true);
+            drawModal(`Your score:\n${triviaScore}/${triviaQuestions.length}\nClick anywhere to restart`, true);
         } 
 
     })
