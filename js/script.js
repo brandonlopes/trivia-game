@@ -109,15 +109,17 @@ function drawQuestion(triviaObject) {
 
     nextQuestionButton.addEventListener('click', () => {
         let attemptedAnswer = document.querySelector(`input[name="${triviaObject.question}"]:checked`);
-        let correctAnswer = document.getElementById(triviaObject.correct_answer).parentElement;
+        let correctAnswer = document.getElementById(triviaObject.correct_answer);
 
         if (attemptedAnswer.id === triviaObject.correct_answer) {
-            correctAnswer.classList.add('correct');
+            correctAnswer.parentElement.style = "background-color: green;";
             drawModal('Correct! 👍');
             triviaScore++;
         } else {
-            correctAnswer.classList.add('correct');
-            attemptedAnswer.parentElement.classList.add('incorrect');
+            console.log(correctAnswer.parentElement);
+            console.log(attemptedAnswer.parentElement);
+            correctAnswer.parentElement.style = "background-color: green;";
+            attemptedAnswer.parentElement.style = "background-color: darkred;";
             drawModal('Incorrect 👎');
         }
 
