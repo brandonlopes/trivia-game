@@ -37,8 +37,8 @@ document.body.onload = () => {
             if (form.elements[0].value === category.name) categoryID = category.id;
         });
 
-        let numberOfQuestions = form.elements[2].value
         let triviaDifficulty = form.elements[1].value.toLowerCase();
+        let numberOfQuestions = form.elements[2].value
         let apiString = `https://opentdb.com/api.php?amount=${numberOfQuestions}&category=${categoryID}&difficulty=${triviaDifficulty}`;
 
         queryTriviaDB(apiString).then(trivia => {
@@ -110,7 +110,7 @@ function drawQuestion(triviaObject) {
 
         if (attemptedAnswer.id === triviaObject.correct_answer) {
             correctAnswer.parentElement.style = "background-color: green;";
-            drawModal('Correct! 👍\n\nClick anywhere to continue' );
+            drawModal('Correct! 👍\n\nClick anywhere to continue');
             triviaScore++;
         } else {
             console.log(correctAnswer.parentElement);
@@ -122,7 +122,7 @@ function drawQuestion(triviaObject) {
 
         if (questionCount === triviaQuestions.length - 1) {
             drawModal(`Your score:\n${triviaScore}/${triviaQuestions.length}\nClick anywhere to restart\n`, true);
-        } 
+        }
 
     })
 
@@ -134,7 +134,7 @@ function drawQuestion(triviaObject) {
         let modalMessage = document.getElementById('message');
         modalMessage.innerText = message;
 
-        function nextQuestion(){
+        function nextQuestion() {
             modal.style.display = 'none';
             drawQuestion(triviaQuestions[questionCount + 1]);
         }
