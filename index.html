@@ -70,18 +70,16 @@
             width: 100%;
         }
 
-        select,
-        input {
+        select {
             margin-bottom: 2em;
-            background-color: var(--gray1);
-            border: none;
-            border-radius: 4px;
+            /* background-color: var(--gray1); */
+            /* border: none;
+            border-radius: 4px; */
         }
 
         select,
         input[type=submit] {
             font-family: 'Lato', sans-serif;
-            transition-duration: 5ms;
             text-transform: capitalize;
             padding-top: 0.5em;
             padding-bottom: 0.5em;
@@ -91,12 +89,10 @@
         input[type=number] {
             padding-top: 0.5em;
             padding-bottom: 0.5em;
-            background-color: var(--gray1);
         }
 
         select:hover,
-        input:hover,
-        button:hover {
+        input:hover{
             cursor: pointer;
             opacity: 0.8;
         }
@@ -105,6 +101,10 @@
             background-color: var(--gray1);
             border: none;
             margin: 0px;
+        }
+
+        input[type='radio']:hover{
+            opacity: 1;
         }
 
         h3 {
@@ -141,6 +141,7 @@
             background-color: lightgray;
             padding: 1em;
             border-radius: 5px;
+            cursor: pointer;
         }
 
         span {
@@ -149,7 +150,6 @@
 
         #modal {
             position: absolute;
-            /* display: none; */
             justify-content: center;
             align-items: flex-end;
             top: 0;
@@ -183,10 +183,6 @@
             flex-direction: column;
         }
 
-        .answerContainer label:hover {
-            cursor: pointer;
-        }
-
         .answerContainer div {
             background-color: var(--gray8);
             padding-left: 1em;
@@ -194,8 +190,13 @@
             padding-bottom: 1em;
             padding-right: 0px;
             max-width: 97%;
+            border: 1px solid transparent;
         }
 
+        .answerContainer div:hover{
+            border: 1px solid var(--gray2);
+            cursor: pointer;
+        }
 
         .questionCount {
             width: 100%;
@@ -230,7 +231,7 @@
             }
         }
     </style>
-    <title>Another Trivia Game</title>
+    <title>Trivia Game</title>
 </head>
 
 <body>
@@ -240,7 +241,7 @@
         </div>
     </div>
 
-    <h3 id="header">Another Trivia Game</h3>
+    <h3 id="header">Trivia Game</h3>
     <main>
 
         <form method="POST">

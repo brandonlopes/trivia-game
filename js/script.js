@@ -27,32 +27,30 @@ const CATEGORIES = [
 let triviaQuestions = [];
 let triviaScore = 0;
 
-document.body.onload = () => {
-    let form = document.getElementsByTagName('form')[0];
+let form = document.getElementsByTagName('form')[0];
 
-    form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        let categoryID = '';
-        CATEGORIES.forEach(category => {
-            if (form.elements[0].value === category.name) categoryID = category.id;
-        });
-
-        let triviaDifficulty = form.elements[1].value.toLowerCase();
-        let numberOfQuestions = form.elements[2].value
-        let apiString = `https://opentdb.com/api.php?amount=${numberOfQuestions}&category=${categoryID}&difficulty=${triviaDifficulty}`;
-
-        queryTriviaDB(apiString).then(trivia => {
-            trivia.results.forEach(result => {
-                let answers = getPotentialAnswers(result);
-                result.potentialAnswers = shuffleAnswers(answers);
-                triviaQuestions.push(result);
-            });
-            drawQuestion(triviaQuestions[0]);
-        });
-
+form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    let categoryID = '';
+    CATEGORIES.forEach(category => {
+        if (form.elements[0].value === category.name) categoryID = category.id;
     });
 
-};
+    let triviaDifficulty = form.elements[1].value.toLowerCase();
+    let numberOfQuestions = form.elements[2].value
+    let apiString = `https://opentdb.com/api.php?amount=${numberOfQuestions}&category=${categoryID}&difficulty=${triviaDifficulty}`;
+
+    queryTriviaDB(apiString).then(trivia => {
+        trivia.results.forEach(result => {
+            let answers = getPotentialAnswers(result);
+            result.potentialAnswers = shuffleAnswers(answers);
+            triviaQuestions.push(result);
+        });
+        console.log(triviaQuestions);
+        drawQuestion(triviaQuestions[0]);
+    });
+
+});
 
 // ----------------------------------------------------------------------------------------- 
 
@@ -108,21 +106,21 @@ function drawQuestion(triviaObject) {
         let attemptedAnswer = document.querySelector(`input[name="${triviaObject.question}"]:checked`);
         let correctAnswer = document.getElementById(triviaObject.correct_answer);
 
+        if (questionCount === triviaQuestions.length - 1) {
+            drawModal(`Your score:\n${triviaScore}/${triviaQuestions.length}\nClick anywhere to restart\n`, true);
+            return;
+        }
+
         if (attemptedAnswer.id === triviaObject.correct_answer) {
             correctAnswer.parentElement.style = "background-color: green;";
             drawModal('Correct! 👍\n\nClick anywhere to continue');
             triviaScore++;
-        } else {
-            console.log(correctAnswer.parentElement);
-            console.log(attemptedAnswer.parentElement);
-            correctAnswer.parentElement.style = "background-color: green;";
-            attemptedAnswer.parentElement.style = "background-color: darkred;";
-            drawModal('Incorrect 👎\n\nClick anywhere to continue');
+            return;
         }
 
-        if (questionCount === triviaQuestions.length - 1) {
-            drawModal(`Your score:\n${triviaScore}/${triviaQuestions.length}\nClick anywhere to restart\n`, true);
-        }
+        correctAnswer.parentElement.style = "background-color: green;";
+        attemptedAnswer.parentElement.style = "background-color: darkred;";
+        drawModal('Incorrect 👎\n\nClick anywhere to continue');
 
     })
 
@@ -168,4 +166,3 @@ async function queryTriviaDB(url) {
     const trivia = await response.json();
     return trivia;
 }
-
