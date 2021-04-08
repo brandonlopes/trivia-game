@@ -27,23 +27,23 @@ const CATEGORIES = [
 let triviaQuestions = [];
 let triviaScore = 0;
 
-let form = document.getElementsByTagName('form')[0];
+const form = document.querySelector('form');
 
 form.addEventListener('submit', (event) => {
     event.preventDefault();
-    let categoryID = '';
-    CATEGORIES.forEach(category => {
-        if (form.elements[0].value === category.name) categoryID = category.id;
-    });
 
-    let triviaDifficulty = form.elements[1].value.toLowerCase();
-    let numberOfQuestions = form.elements[2].value
-    let apiString = `https://opentdb.com/api.php?amount=${numberOfQuestions}&category=${categoryID}&difficulty=${triviaDifficulty}`;
+    const apiString = () => {
+        let categoryID;
+        CATEGORIES.forEach(category => { if (form.elements[0].value === category.name) categoryID = category.id; });
+        let triviaDifficulty = form.elements[1].value.toLowerCase();
+        let numberOfQuestions = form.elements[2].value
+        return `https://opentdb.com/api.php?amount=${numberOfQuestions}&category=${categoryID}&difficulty=${triviaDifficulty}`;
+    }
 
-    queryTriviaDB(apiString).then(trivia => {
+    queryTriviaDB(apiString()).then(trivia => {
         trivia.results.forEach(result => {
             let answers = getPotentialAnswers(result);
-            result.potentialAnswers = shuffleAnswers(answers);
+            result.potential_answers = shuffleAnswers(answers);
             triviaQuestions.push(result);
         });
         console.log(triviaQuestions);
@@ -54,8 +54,27 @@ form.addEventListener('submit', (event) => {
 
 // ----------------------------------------------------------------------------------------- 
 
+
+const getPotentialAnswers = (question) => [].concat(question.incorrect_answers, question.correct_answer);
+
+function shuffleAnswers(answers) {
+    let i, random, temp;
+    for (i = answers.length - 1; i > 0; i--) {
+        random = Math.floor(Math.random() * (i + 1));
+        temp = answers[i];
+        answers[i] = answers[random];
+        answers[random] = temp;
+    }
+    return answers;
+}
+
+async function queryTriviaDB(url) {
+    const response = await fetch(url);
+    return await response.json();
+}
+
 function drawQuestion(triviaObject) {
-    let main = document.getElementsByTagName('main')[0];
+    let main = document.querySelector('main');
     main.innerHTML = '';
 
     let question = document.createElement('p');
@@ -73,7 +92,7 @@ function drawQuestion(triviaObject) {
     let nextQuestionButton = document.createElement('button');
     nextQuestionButton.innerText = 'Next Question';
 
-    triviaObject.potentialAnswers.forEach(answer => {
+    triviaObject.potential_answers.forEach(answer => {
         let answerButton = document.createElement('input');
         answerButton.setAttribute('type', 'radio');
         answerButton.name = triviaObject.question;
@@ -106,23 +125,22 @@ function drawQuestion(triviaObject) {
         let attemptedAnswer = document.querySelector(`input[name="${triviaObject.question}"]:checked`);
         let correctAnswer = document.getElementById(triviaObject.correct_answer);
 
+        if (attemptedAnswer.id === triviaObject.correct_answer) {
+            correctAnswer.parentElement.style = "background-color: green;";
+            drawModal('Correct! 👍\n\nClick anywhere to continue');
+            triviaScore++;
+        } else {
+            correctAnswer.parentElement.style = "background-color: green;";
+            attemptedAnswer.parentElement.style = "background-color: darkred;";
+            drawModal('Incorrect 👎\n\nClick anywhere to continue');
+        }
+
         if (questionCount === triviaQuestions.length - 1) {
             drawModal(`Your score:\n${triviaScore}/${triviaQuestions.length}\nClick anywhere to restart\n`, true);
             return;
         }
 
-        if (attemptedAnswer.id === triviaObject.correct_answer) {
-            correctAnswer.parentElement.style = "background-color: green;";
-            drawModal('Correct! 👍\n\nClick anywhere to continue');
-            triviaScore++;
-            return;
-        }
-
-        correctAnswer.parentElement.style = "background-color: green;";
-        attemptedAnswer.parentElement.style = "background-color: darkred;";
-        drawModal('Incorrect 👎\n\nClick anywhere to continue');
-
-    })
+    });
 
     function drawModal(message, restart) {
         let modal = document.getElementById('modal');
@@ -145,24 +163,4 @@ function drawQuestion(triviaObject) {
         }
     }
 
-}
-
-function getPotentialAnswers(question) {
-    let potentialAnswers = [];
-    potentialAnswers = potentialAnswers.concat(question.incorrect_answers, question.correct_answer);
-    return potentialAnswers;
-};
-
-function shuffleAnswers(answers) {
-    for (let i = answers.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [answers[i], answers[j]] = [answers[j], answers[i]];
-    }
-    return answers;
-}
-
-async function queryTriviaDB(url) {
-    const response = await fetch(url);
-    const trivia = await response.json();
-    return trivia;
 }
